@@ -4,7 +4,7 @@
 #include <algorithm>
 #include "util.h"
 
-using namespace std;
+
 std::string convToLower(std::string src)
 {
     std::transform(src.begin(), src.end(), src.begin(), ::tolower);
@@ -17,33 +17,28 @@ std::set<std::string> parseStringToWords(string rawWords)
 {
 	  rawWords = convToLower(rawWords);
 	  set<string> words;
-		string tmp= "";
-    for(auto x: rawWords){
-        if((ispunct(x)) && tmp.size()>=2){
-					words.insert(tmp);
-					tmp = "";
+		string temp= "";
+    for(unsigned int i=0; i< rawWords.size(); i++){
+			  char x = rawWords[i];
+        if(!ispunct(x) && x!=' '){
+					temp += x;
 				}
-				else if(ispunct(x)) tmp = "";
-				else{
-					tmp += x;
+				else if(ispunct(x) || x == ' '){
+					if(temp.size()>1){
+						words.insert(temp);
+						temp = "";
+					}
+					else{
+						temp = "";
+					}
 				}
-			
 		}
-		if(tmp !="" && tmp.size()>=2){
-					words.insert(tmp);
-				}
+		if(temp.size()>1)
+			words.insert(temp);
 		return words;
 }
-int main(){
-	set<int> val{6,3,5,4}; 
-	set<int> lav = {};
-	set<int> hey = setUnion(val, lav);
-	set<int, greater<int> >::iterator itr;
-	for (itr = hey.begin(); itr != hey.end(); itr++) {
-        cout << *itr << " ";
-    }
-	return 0;
-}
+
+
 /**************************************************
  * COMPLETED - You may use the following functions
  **************************************************/

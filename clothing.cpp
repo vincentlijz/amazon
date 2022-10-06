@@ -1,7 +1,7 @@
 #include "clothing.h"
 #include "product.h"
-#include<iostream>
-using namespace std; 
+
+
 
 Clothing::Clothing(const std::string category, const std::string name, double price, int qty, const std::string size, const std::string brand):
 Product(category, name, price, qty)
@@ -10,26 +10,28 @@ Product(category, name, price, qty)
 	brand_ = brand;
 }
 
-std::set<std::string> Clothing:: keywords(){
-		std::set<std::string> temp; 
-		temp.insert(name_);
-		temp.insert(size_);
-		temp.insert(brand_);
+	std::set<std::string> Clothing:: keywords()const{
+		std::set<std::string> n = parseStringToWords(name_); 
+		std::set<std::string> i = parseStringToWords(size_);
+		std::set<std::string> a = parseStringToWords(brand_);
+		std::set<std::string> temp;
+		temp = setUnion(n,i);
+		temp = setUnion(temp, a);
 		return temp;
 	}
 
-std::string Clothing:: displayString(){
+	std::string Clothing:: displayString()const{
 		std::string info;
-		info = name_ + "/n" + "Size: " + size_ + " " + "Brand: " + brand_
-			+ "/n" + to_string(price_) + " " + to_string(qty_) + " left.";
+		info = name_ + "\n" + "Size: " + size_ + " " + "Brand: " + brand_
+			+ "\n" + std::to_string(price_) + " " + std::to_string(qty_) + " left.";
 		return info;
 	}
 	
 	void Clothing::dump(std::ostream& os) const{
-		cout << category_ << endl;
-		cout << name_ << endl;
-		cout << price_ << endl;
-		cout << qty_ << endl;
-		cout << size_ << endl;
-		cout << brand_ << endl;
+		os << category_ << std::endl;
+		os << name_ << std::endl;
+		os << price_ << std::endl;
+		os << qty_ << std::endl;
+		os << size_ << std::endl;
+		os << brand_ << std::endl;
 	}

@@ -6,6 +6,7 @@
 #include <string>
 #include <string.h>
 #include <set>
+#include "util.h"
 
 
 class Clothing: public Product{
@@ -15,7 +16,7 @@ class Clothing: public Product{
 		std::string displayString() const;
 		void dump(std::ostream& os) const;
 		
-  protected:
+  private:
 		std::string size_;
 		std::string brand_;
 };

@@ -1,7 +1,4 @@
 #include "movie.h"
-#include "product.h"
-#include <iostream>
-using namespace std; 
 
 Movie::Movie(const std::string category, const std::string name, double price, int qty, const std::string genre, const std::string rating):
 Product(category, name, price, qty)
@@ -10,26 +7,28 @@ Product(category, name, price, qty)
 	rating_ = rating;
 }
 
-std::set<std::string> Movie::keywords(){
-		std::set<std::string> temp; 
-		temp.insert(name_);
-		temp.insert(genre_);
-		temp.insert(rating_);
+std::set<std::string> Movie::keywords()const{
+	  std::set<std::string> n = parseStringToWords(name_); 
+		std::set<std::string> i = parseStringToWords(genre_);
+		std::set<std::string> a = parseStringToWords(rating_);
+		std::set<std::string> temp;
+		temp = setUnion(n,i);
+		temp = setUnion(temp, a);
 		return temp;
-	}
+}
 
-std::string Movie::displayString(){
+std::string Movie::displayString() const{
 		std::string info;
-		info = name_ + "/n" + "Genre: " + genre_ + " " + "Rating: " + rating_
-			+ "/n" + to_string(price_) + " " + to_string(qty_) + " left.";
+		info = name_ + "\n" + "Genre: " + genre_ + " " + "Rating: " + rating_
+			+ "\n" + std::to_string(price_) + " " + std::to_string(qty_) + " left.";
 		return info;
 	}
 	
 	void Movie::dump(std::ostream& os) const{
-		cout << category_ << endl;
-		cout << name_ << endl;
-		cout << price_ << endl;
-		cout << qty_ << endl;
-		cout << genre_ << endl;
-		cout << rating_ << endl;
+		os << category_ << std::endl;
+		os << name_ << std::endl;
+		os << price_ << std::endl;
+		os << qty_ << std::endl;
+		os << genre_ << std::endl;
+		os << rating_ << std::endl;
 	}
