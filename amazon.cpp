@@ -76,7 +76,6 @@ int main(int argc, char* argv[])
                 string term;
                 vector<string> terms;
                 while(ss >> term) { 
-									  cout << "term" << endl;
                     term = convToLower(term);
                     terms.push_back(term);
                 }

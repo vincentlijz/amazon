@@ -1,7 +1,7 @@
 #include "clothing.h"
 #include "product.h"
 
-
+#include<sstream>
 
 Clothing::Clothing(const std::string category, const std::string name, double price, int qty, const std::string size, const std::string brand):
 Product(category, name, price, qty)
@@ -22,8 +22,11 @@ Product(category, name, price, qty)
 
 	std::string Clothing:: displayString()const{
 		std::string info;
+		std::ostringstream streamObj;
+		streamObj << price_;
+		std::string strObj = streamObj.str();
 		info = name_ + "\n" + "Size: " + size_ + " " + "Brand: " + brand_
-			+ "\n" + std::to_string(price_) + " " + std::to_string(qty_) + " left.";
+			+ "\n" + strObj + " " + std::to_string(qty_) + " left.";
 		return info;
 	}
 	

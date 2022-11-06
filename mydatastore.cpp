@@ -26,7 +26,7 @@ void MyDataStore::addUser(User* u){
 std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int type){
 	//return a vector of products that match the keyterms 
 	if(type == 0){
-		std::cout << terms[0] << std::endl;
+		// std::cout << terms[0] << std::endl;
 		std::set<Product*> cur = products[terms[0]];
 		std::set<Product*> temp;
 		for(unsigned int i=1; i <terms.size(); i+=2) {
@@ -39,7 +39,7 @@ std::vector<Product*> MyDataStore::search(std::vector<std::string>& terms, int t
 	else if(type == 1){
 		std::set<Product*> cur;
 		std::set<Product*> temp;
-		for(unsigned int i=0; i <terms.size(); i+=2) {
+		for(unsigned int i=0; i <terms.size(); i++) { //problem!!
     	temp = products[terms[i]];
 			cur = setUnion(cur, temp);
  		}
@@ -59,19 +59,19 @@ void MyDataStore::dump(std::ostream& ofile){
 		}
 	}
 	ofile << "</products>" << std::endl;
-	ofile << "users" <<std::endl;
+	ofile << "<users>" <<std::endl;
 	std::map<std::string, User*>:: iterator i;
 	for (i=users.begin(); i!=users.end(); i++){
 		i->second->dump(ofile);
 	}
-	ofile<< "/users" << std::endl;
+	ofile<< "</users>" << std::endl;
 }
 
 // void MyDataStore::addtoCart(std::string username, std::vector<Product*> s_result, int hit_index)
 void MyDataStore::addtoCart(std::string username, int hit){
 	int hit_index = hit - 1;
 	if(users.find(username) == users.end() || hit_index > prev_search_result.size() || hit_index < 0){
-		std::cout << "invalid username" << std::endl;
+		std::cout << "Invalid request" << std::endl;
 		return;
 	}
 	Product* choice = prev_search_result[hit_index];
@@ -80,12 +80,14 @@ void MyDataStore::addtoCart(std::string username, int hit){
 
 void MyDataStore::viewCart(std::string username){
 	if(users.find(username)== users.end()){
-		std::cout << "invalid user" << std::endl;
+		std::cout << "Invalid username" << std::endl;
 		return;
 	}
 	std::deque<Product*> q_copy = usercart[username];
 	for (unsigned int i=0; i < q_copy.size(); i++) {
-    std::cout << i+1 <<". " << q_copy[i]->displayString() << std::endl;
+    // std::cout << i+1 <<". " << q_copy[i]->displayString() << std::endl;
+		std::cout << "Item " << i+1 << std::endl;
+		std::cout << q_copy[i]->displayString() << std::endl;
   }
 }
 

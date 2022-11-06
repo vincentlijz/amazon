@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include <iostream>
+#include<sstream>
 using namespace std;
 
 Book::Book(const std::string category, const std::string name, double price, int qty, const std::string isbn, const std::string author):
@@ -16,7 +17,8 @@ Product(category, name, price, qty)
 
 std::set<std::string> Book:: keywords() const{
 		std::set<std::string> n = parseStringToWords(name_);
-		std::set<std::string> i = parseStringToWords(isbn_);
+		std::set<std::string> i;
+		i.insert(isbn_);
 		std::set<std::string> a = parseStringToWords(author_);
 		std::set<std::string> temp;
 		temp = setUnion(n,i);
@@ -26,8 +28,11 @@ std::set<std::string> Book:: keywords() const{
 
 std::string Book:: displayString() const{
 		std::string info;
+		std::ostringstream streamObj;
+		streamObj << price_;
+		std::string strObj = streamObj.str();
 		info = name_ + "\n" + "Author: " + author_ + " " + "ISBN: " + isbn_
-			+ "\n" + std::to_string(price_) + " " + std::to_string(qty_) + " left.";
+			+ "\n" + strObj + " " + std::to_string(qty_) + " left.";
 		return info;
 	}
 	
